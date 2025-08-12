@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    command: node dist/main.js
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000" # if your app listens on a port
+    deploy:
+      resources:
+        limits:
+          memory: 256M      # limit memory to 512 MB
+          cpus: '3.0'     
+
+#  test:
+#    build: .
+#    command: npm test
+#    volumes:
+#      - .:/usr/src/app
