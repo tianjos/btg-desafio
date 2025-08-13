@@ -1,12 +1,12 @@
 import { Request, Response, Router } from 'express';
-import { CreateOrderController } from './controllers/createrOrderController';
-import { CreateOrderUseCase } from '../../application/usecases/create_order.usecase';
-import { OrderStatusUseCase } from '../../application/usecases/order_status.usecase';
-import { OrderStatusController } from './controllers/orderStatusController';
-import { OrderRepository } from '../../domain/repositories/order.repository';
-import { HttpController } from './controllers/HttpController';
-import { Queue } from '../../domain/queues/queue';
-import { Order } from '../../domain/entities/order';
+import { CreateOrderController } from './controllers/creater_order.js';
+import { CreateOrderUseCase } from '../../application/usecases/create_order.js';
+import { OrderStatusUseCase } from '../../application/usecases/order_status.js';
+import { OrderStatusController } from './controllers/order_status.js';
+import { OrderRepository } from '../../domain/repositories/order.js';
+import { HttpController } from './controllers/http_controller.js';
+import { Queue } from '../../domain/queues/queue.js';
+import { Order } from '../../domain/entities/order.js';
 
 export class RouteMethod {
     constructor(private method: 'post' | 'get') {}

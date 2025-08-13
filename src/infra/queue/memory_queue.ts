@@ -1,7 +1,7 @@
-import { Order } from "../../domain/entities/order";
-import { Queue } from "../../domain/queues/queue";
+import { Order } from "../../domain/entities/order.js";
+import { Queue } from "../../domain/queues/queue.js";
 
-export class InMemoryQueue implements Queue<Order> {
+export class MemoryQueue implements Queue<Order> {
     constructor(private queue: Order[]) {}
 
     public enqueue(order: Order) {

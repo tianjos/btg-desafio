@@ -1,4 +1,4 @@
-import { parentPort, workerData } from "node:worker_threads";import { WorkerOrderDto } from "../../application/dtos/worker_order.dto.js";
+import { WorkerOrderDto } from "../../application/dtos/worker_order.js";
 
 export default async function (order: WorkerOrderDto): Promise<WorkerOrderDto> {
     return new Promise(resolve => {

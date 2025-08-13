@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { HttpController } from "./HttpController";
-import { OrderStatusUseCase } from "../../../application/usecases/order_status.usecase";
+import { HttpController } from "./http_controller.js";
+import { OrderStatusUseCase } from "../../../application/usecases/order_status.js";
 
 export class OrderStatusController implements HttpController {
     constructor(private usecase: OrderStatusUseCase) {}

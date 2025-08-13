@@ -1,9 +1,8 @@
 import { Order } from '../../domain/entities/order.js';
 import { Queue } from '../../domain/queues/queue.js';
-import { OrderRepository } from '../../domain/repositories/order.repository.js';
-import { ThreadingPool } from '../../domain/threading_pools/pool.js';
-import { OrderDto } from '../dtos/order.dto.js';
-import { UseCase } from './use_case.interface.js';
+import { OrderRepository } from '../../domain/repositories/order.js';
+import { OrderDto } from '../dtos/order.js';
+import { UseCase } from './use_case.js';
 
 export class CreateOrderUseCase implements UseCase<OrderDto, Order> {
   constructor(private repo: OrderRepository, private queue: Queue<Order>) {} 

@@ -1,4 +1,4 @@
-import { Order } from "../entities/order";
+import { Order } from "../entities/order.js";
 
 export interface OrderRepository {
     add(order: Order): void;

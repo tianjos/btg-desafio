@@ -25,6 +25,13 @@ export class Order {
         return this.status === 'processed';
     }
 
+    valid() {
+        return (
+            typeof this.clientId === 'string' &&
+            Array.isArray(this.items)
+        )
+    }
+
     toJSON() {
         return {
             id: this.id,

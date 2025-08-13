@@ -1,6 +1,6 @@
-import { OrderRepository } from '../../domain/repositories/order.repository.js';
-import { OrderStatusDto } from '../dtos/order_status.dto.js';
-import { UseCase } from './use_case.interface.js';
+import { OrderRepository } from '../../domain/repositories/order.js';
+import { OrderStatusDto } from '../dtos/order_status.js';
+import { UseCase } from './use_case.js';
 
 export class OrderStatusUseCase implements UseCase<{id: string}, OrderStatusDto | undefined> {
     constructor(private repo: OrderRepository) {}

@@ -1,5 +1,5 @@
-import { Order } from "../../domain/entities/order";
-import { OrderRepository } from "../../domain/repositories/order.repository";
+import { Order } from "../../domain/entities/order.js";
+import { OrderRepository } from "../../domain/repositories/order.js";
 
 export class OrderRepoInMemory implements OrderRepository {
     private data: Map<string, Order> = new Map();
