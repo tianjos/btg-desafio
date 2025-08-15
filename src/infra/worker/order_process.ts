@@ -6,6 +6,6 @@ export default async function (dto: WorkerOrderDto): Promise<WorkerOrderDto> {
             const now = new Date().toISOString();
             console.log(`[${now}] - [${dto.id.value}] processed`)
             resolve(dto)
-        }, 5000)
+        }, 2000)
     })
 }
