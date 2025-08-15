@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import { CreateOrderController } from './controllers/creater_order.js';
 import { CreateOrderUseCase } from '../../application/usecases/create_order.js';
 import { OrderStatusUseCase } from '../../application/usecases/order_status.js';
@@ -15,9 +15,6 @@ export class RouteMethod {
     }
 }
 
-interface RouteHandler {
-    handle(req: Request, res: Response): void
-}
 
 export class HttpRoute {
     constructor(

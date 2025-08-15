@@ -6,43 +6,47 @@ import { MemoryQueue } from "../../src/infra/queue/memory_queue.js";
 import { OrderRepository } from "../../src/domain/repositories/order.js";
 import { Worker } from "../../src/infra/worker/worker.js";
 import { ThreadingPool } from "../../src/domain/threading_pools/pool.js";
-import { UseCase } from "../../src/application/usecases/use_case.js";
-import { OrderProcessingUseCase } from "../../src/application/usecases/order_processing.js";
 import { OrderRepoInMemory } from "../../src/infra/db/order.js";
 import { CPU } from "../../src/infra/system/cpu.js";
-import { PiscinaThreading } from "../../src/infra/thread/pool.js";
+import { FakePool } from "../../src/infra/thread/fake_pool.js";
 import { fakeOrderProcess } from "../../src/infra/worker/main.js";
 import { OrderWorker } from "../../src/infra/worker/order_worker.js";
 
 
-describe('Create Order', () => {
-    let server: ReturnType<typeof createServer>;
+describe('Order', () => {
     let queue: Queue<Order>;
     let repo: OrderRepository;
     let worker: Worker;
     let pool: ThreadingPool;
-    let backgroundTask: UseCase<void, void>;
+    let server: ReturnType<typeof createServer>;
 
     beforeEach(async () => {
         repo = new OrderRepoInMemory()
         queue = new MemoryQueue([])
-        worker = new OrderWorker(fakeOrderProcess)
-        pool = new PiscinaThreading(worker, new CPU())
-        backgroundTask = new OrderProcessingUseCase(repo, queue, pool)
+        pool = new  FakePool(fakeOrderProcess, new CPU())
+        worker = new OrderWorker(queue, pool, repo)
 
-        server = createServer(queue, repo, backgroundTask)
+        server = createServer(queue, repo, worker)
     })
 
     afterEach(async () => {
-        (backgroundTask as any).stopLoop();
-        await new Promise<void>((resolve) => server.close(() => resolve()));
-        await pool.stop()
+        server.cleanUp()
     })
 
     it('should create order', async () => {
         const payload = { clientId: '123', items: [] }
-        const res = await request(server).post("/pedidos").send(payload).set("Content-Type", "application/json")
+        const res = await request(server.server).post("/pedidos").send(payload).set("Content-Type", "application/json")
 
         expect(res.status).toBe(201)
     })
+
+    it('should return order processed', async () => {
+        const payload = { client: '123', items: [] }
+        const res1 = await request(server.server).post("/pedidos").send(payload).set("Content-Type", "application/json")
+        
+        const res2 = await request(server.server).get(`/pedidos/${res1.body.id}`)
+
+        expect(res2.body).toBe({ status: 'processed' })
+    })
+
 })

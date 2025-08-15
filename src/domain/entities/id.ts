@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto"
-import { Printable } from "../../application/interfaces/printable";
+import { Printable } from "../../application/interfaces/printable.js";
 
 export class Id implements Printable {
     private value: string

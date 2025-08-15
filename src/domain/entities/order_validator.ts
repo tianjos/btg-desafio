@@ -1,5 +1,5 @@
-import { OrderDto } from "../../application/dtos/order";
-import { JsonSerializer } from "../../application/interfaces/json_serializable";
+import { OrderDto } from "../../application/dtos/order.js";
+import { JsonSerializer } from "../../application/interfaces/json_serializable.js";
 
 export class OrderValidator implements JsonSerializer<OrderDto> {
     constructor(private clientId: string, private items: string[]) {}

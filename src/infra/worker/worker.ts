@@ -1,3 +1,4 @@
 export interface Worker {
-    location(): string
+    start(): void
+    stop(): void
 }

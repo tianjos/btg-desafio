@@ -1,8 +1,8 @@
-import { OrderStatusDto } from "../../application/dtos/order_status";
-import { JsonSerializer } from "../../application/interfaces/json_serializable";
-import { Order } from "../../application/interfaces/order";
-import { PendingOrder } from "./pending_order";
-import { ProcessedOrder } from "./processed_order";
+import { OrderStatusDto } from "../../application/dtos/order_status.js";
+import { JsonSerializer } from "../../application/interfaces/json_serializable.js";
+import { Order } from "../../application/interfaces/order.js";
+import { PendingOrder } from "./pending_order.js";
+import { ProcessedOrder } from "./processed_order.js";
 
 export class OrderMessage implements JsonSerializer<OrderStatusDto> {
     private status() {

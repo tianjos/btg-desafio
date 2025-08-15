@@ -1,17 +1,17 @@
 import Piscina from "piscina";
 import { CPU } from "../system/cpu.js";
 import { ThreadingPool } from "../../domain/threading_pools/pool.js";
-import { Worker } from "../worker/worker.js";
+import { WorkerFile } from "../worker/worker_file.js";
 
 
 export class PiscinaThreading implements ThreadingPool {
     private piscina: Piscina
 
-    constructor(private worker: Worker, private cpu: CPU) {
+    constructor(private worker: WorkerFile, private cpu: CPU) {
         this.piscina = new Piscina({
             minThreads: this.cpu.cores(),
             maxThreads: this.cpu.cores(),
-            filename: this.worker.location(),
+            filename: this.worker.asPath(),
         })
     }
 

@@ -1,5 +1,5 @@
-import { Id } from "./id";
-import { Order } from "../../application/interfaces/order";
+import { Id } from "./id.js";
+import { Order } from "../../application/interfaces/order.js";
 
 export class NullOrder implements Order {
     processed(): Order {

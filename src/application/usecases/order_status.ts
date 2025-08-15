@@ -1,5 +1,4 @@
 import { Id } from '../../domain/entities/id.js';
-import { Order } from '../interfaces/order.js';
 import { OrderMessage } from '../../domain/entities/order_message.js';
 import { OrderRepository } from '../../domain/repositories/order.js';
 import { UseCase } from './use_case.js';

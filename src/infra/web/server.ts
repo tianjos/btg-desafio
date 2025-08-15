@@ -3,19 +3,26 @@ import { buildOrderRoutes } from './routes.js';
 import { OrderRepository } from '../../domain/repositories/order.js';
 import { Queue } from '../../domain/queues/queue.js';
 import { Order } from '../../application/interfaces/order.js';
-import { UseCase } from '../../application/usecases/use_case.js';
+import { Worker } from '../worker/worker.js';
 
-export function createServer(queue: Queue<Order>, repo: OrderRepository, backgroundTask: UseCase<void, void>) {
+export function createServer(queue: Queue<Order>, repo: OrderRepository, worker: Worker) {
   const app = express();
   const router = Router()
   
   app.use(express.json());
   app.use(buildOrderRoutes(router, repo, queue));
 
-  return app.listen(3000, () => {
+  const server = app.listen(3000, () => {
     console.log('starting app on port 3000')
-    backgroundTask.execute()
+    worker.start()
   })
 
-  //return app;
+  return {
+    server,
+    worker,
+    cleanUp: () => {
+      server.close()
+      worker.stop()
+    }
+  }
 }

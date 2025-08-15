@@ -1,4 +1,3 @@
-import { OrderProcessingUseCase } from "./application/usecases/order_processing.js";
 import { OrderRepoInMemory } from "./infra/db/order.js";
 import { MemoryQueue } from "./infra/queue/memory_queue.js";
 import { CPU } from "./infra/system/cpu.js";
@@ -10,12 +9,15 @@ import { OrderWorker } from "./infra/worker/order_worker.js";
 const main = () => {
     const repo = new OrderRepoInMemory()
     const queue = new MemoryQueue([])
-    const worker = new OrderWorker(orderProcess)
-    const pool = new PiscinaThreading(worker, new CPU())
-    const backgroundTask = new OrderProcessingUseCase(repo, queue, pool)
+    const pool = new PiscinaThreading(orderProcess, new CPU())
+    const worker = new OrderWorker(queue, pool, repo)
     
-    createServer(queue, repo, backgroundTask)
+    const {cleanUp } = createServer(queue, repo, worker)
+
+    process.on('SIGINT', () => {
+        console.log('server aborted')
+        cleanUp()
+    })
 }
 
 main()
-
