@@ -6,7 +6,7 @@ import { OrderStatusController } from './controllers/order_status.js';
 import { OrderRepository } from '../../domain/repositories/order.js';
 import { HttpController } from './controllers/http_controller.js';
 import { Queue } from '../../domain/queues/queue.js';
-import { Order } from '../../domain/entities/order.js';
+import { Order } from '../../application/interfaces/order.js';
 
 export class RouteMethod {
     constructor(private method: 'post' | 'get') {}

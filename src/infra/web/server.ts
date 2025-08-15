@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import { buildOrderRoutes } from './routes.js';
 import { OrderRepository } from '../../domain/repositories/order.js';
 import { Queue } from '../../domain/queues/queue.js';
-import { Order } from '../../domain/entities/order.js';
+import { Order } from '../../application/interfaces/order.js';
 import { UseCase } from '../../application/usecases/use_case.js';
 
 export function createServer(queue: Queue<Order>, repo: OrderRepository, backgroundTask: UseCase<void, void>) {
@@ -12,10 +12,10 @@ export function createServer(queue: Queue<Order>, repo: OrderRepository, backgro
   app.use(express.json());
   app.use(buildOrderRoutes(router, repo, queue));
 
-  app.listen(3000, () => {
+  return app.listen(3000, () => {
     console.log('starting app on port 3000')
     backgroundTask.execute()
   })
 
-  return app;
+  //return app;
 }

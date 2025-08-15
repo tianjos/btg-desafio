@@ -1,8 +1,7 @@
-import { OrderStatus } from "../../domain/entities/order.js"
+//import { OrderStatus } from "../../domain/entities/order.js"
 
 export interface WorkerOrderDto {
-    id: string
+    id: { value: string }
     clientId: string
-    status: OrderStatus,
-    items: string
+    items: string[]
 }

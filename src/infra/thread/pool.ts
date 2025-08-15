@@ -11,11 +11,15 @@ export class PiscinaThreading implements ThreadingPool {
         this.piscina = new Piscina({
             minThreads: this.cpu.cores(),
             maxThreads: this.cpu.cores(),
-            filename: this.worker.location()
+            filename: this.worker.location(),
         })
     }
 
     run(task: any): Promise<any> {
         return this.piscina.run(task)
+    }
+
+    stop(): Promise<void> {
+        return this.piscina.destroy()
     }
 }

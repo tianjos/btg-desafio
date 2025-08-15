@@ -1,15 +1,15 @@
+import { Id } from '../../domain/entities/id.js';
+import { Order } from '../interfaces/order.js';
+import { OrderMessage } from '../../domain/entities/order_message.js';
 import { OrderRepository } from '../../domain/repositories/order.js';
-import { OrderStatusDto } from '../dtos/order_status.js';
 import { UseCase } from './use_case.js';
 
-export class OrderStatusUseCase implements UseCase<{id: string}, OrderStatusDto | undefined> {
+export class OrderStatusUseCase implements UseCase<{id: Id}, OrderMessage> {
     constructor(private repo: OrderRepository) {}
 
-    execute(params: {id: string}): OrderStatusDto | undefined {
+    execute(params: { id: Id }): OrderMessage {
         const order = this.repo.findById(params.id)
 
-        if (order) {
-            return { status: order.toJSON()['status'] }
-        }
+        return new OrderMessage(order)
   }
 }

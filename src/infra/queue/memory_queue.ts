@@ -1,4 +1,4 @@
-import { Order } from "../../domain/entities/order.js";
+import { Order } from "../../application/interfaces/order.js";
 import { Queue } from "../../domain/queues/queue.js";
 
 export class MemoryQueue implements Queue<Order> {
